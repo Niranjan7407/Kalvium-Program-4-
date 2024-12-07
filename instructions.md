@@ -1,46 +1,68 @@
-## Overview
-This milestone project is a basic Todo List application built using React. The goal is to test your understanding of React core concepts, including state management, event handling, and conditional rendering.
+import { useState } from 'react';
+import './App.css';
+import { Button, Input, ChakraProvider } from '@chakra-ui/react';
 
-## Problem Statement
-You are tasked with building a Todo List where users can:
-- Add new tasks.
-- Mark tasks as completed by clicking on them.
-- Delete tasks from the list.
+function App() {
+  // Task 1: Declare a state variable 'count' using useState (initial value: 0)
+  const [count,setCount]=useState(0);
 
-## Key Features
-- **Add Todos:** Users should be able to add new tasks by typing in the input field and clicking the "Add Todo" button.
-- **Delete Todos:** Users can remove tasks by clicking the "Delete" button next to each task.
-- **Erase the input after adding the Todo**
+  // Task 2: Declare a state variable 'isVisible' using useState (initial value: true)
+  const [isVisible,setIsVisible]=useState(true);
 
-## Files to Focus On
-`src/components/TodoList.jsx`: This is the main component where you will implement the necessary functionalities.
+  // Task 3: Declare a state variable 'inputValue' using useState (initial value: empty string)
+  const [inputValue,setInputValue]=useState('')
 
-## Component Instructions
-- **State Initialization:**
-  - `todos`: An array of todo objects `{ text: string, completed: boolean }`.
-  - `newTodo`: A string representing the current input value.
-  
-- **Event Handlers:**
-  - **`handleInputChange`**: Updates the `newTodo` state.
-  - **`handleAddTodo`**: Adds a new todo to the `todos` array and clears the input.
-  - **`handleToggleComplete`**: Toggles the `completed` status of a todo.
-  - **`handleDeleteTodo`**: Removes a todo from the list.
+  // Task 4: Create a function to handle changes in the input field
+  const handleInputChange = (event) => {
+    // Update the 'inputValue' with the value entered in the input field
+    setInputValue(event.target.value)
+   
+  };
 
-## Test Cases
-Jasmine test cases are provided to evaluate your implementation:
-1. **should render correctly with no todos**
-2. **should allow adding a todo**
-3. **should clear input field after adding a todo**
-4. **should delete a todo**
+  // Task 5: Create a function to apply the input value to the 'count' variable
+  const applyInputValue = () => {
+    // Use parseInt to update the 'count' if the input value is a valid number
+    setCount(parseInt(document.getElementById('abc').value))
+   
+  };
 
+  return (
+    <ChakraProvider>
+      <div>
+        {/* Task 6: Button to toggle counter visibility */}
+        <Button onClick={() =>{setIsVisible(!isVisible)}}>
+          Toggle Counter Visibility
+        </Button>
 
-## Expected Output
-Refer to the Loom video below to see the expected output:
-[Expected Output Video](https://www.loom.com/share/4c7474a2a8034efd976d6fa351b863aa?sid=4e8562af-d35e-4e9d-bbe0-b257b39e81e8)
+        {/* Task 7: Input field to allow users to set the counter value */}
+        <Input
+          id='abc'
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Set counter value"
+        />
 
-## How to Run the Test Cases
+        {/* Task 8: Button to set the counter value to the input field value */}
+        <Button onClick={applyInputValue} className="set-counter-button">Set Counter</Button>
 
-1. Use `npm run test:serve` to run the tests and visualize the results.
+        {/* Task 9: Button to reset the counter value to 0 */}
+        <Button onClick={() => {setCount(0)}}>Reset Counter</Button>
+      </div>
+      
+      {/* Task 10: Conditionally render the counter only if 'isVisible' is true */}
+      {isVisible && (
+        <div className="card">
+          {/* Task 11: Button to increment the counter */}
+          <Button 
+            onClick={() => {setCount((prev)=>prev+1)}}
+            className="chakra-button"
+          >
+            count is {count}
+          </Button>
+        </div>
+      )}
+    </ChakraProvider>
+  );
+}
 
-
-**You are expected to complete the code functions in TodoList.jsx**
+export default App;
